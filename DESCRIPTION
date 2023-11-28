@@ -1,0 +1,14 @@
+Package: toolchainR
+Title: A package to make installing R toolchains easieR
+Version: 0.0.1
+Date: 2023-11-28
+Authors@R: c(person("Alexander", "Christensen", email = "alexpaulchristensen@gmail.com", role = c("cre", "aut"), comment = c(ORCID = "0000-0002-9798-7037")))
+Maintainer: Alexander P. Christensen <alexpaulchristensen@gmail.com>
+Description: A single function package to handle the installation of R toolchains for all operating systems
+Depends: R (>= 3.5.0)
+License: GPL (>= 3.0)
+Encoding: UTF-8
+LazyData: true
+Imports: installr, pkgbuild, remotes
+BugReports: https://github.com/AlexChristensen/toolchainR/issues
+RoxygenNote: 7.2.3

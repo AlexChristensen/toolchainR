@@ -19,8 +19,7 @@ R version and operating system. Follow the instructions
 }
 \examples{
 if(interactive()){
-  toolchainR()
-}
+  toolchainR()}
 
 }
 \author{

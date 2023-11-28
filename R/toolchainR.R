@@ -83,7 +83,7 @@ toolchainR <- function()
           paste0(
             colortext(textsymbol("check mark"), defaults = "green"),
             " Toolchain is already installed.\n\n",
-            "You should be able to install packages that compile C, C++, and FORTRAN code."
+            "You should be able to install packages that compile C, C++, and FORTRAN code.\n"
           )
         )
         
@@ -103,7 +103,7 @@ toolchainR <- function()
           paste0(
             colortext(textsymbol("check mark"), defaults = "green"),
             " Toolchain is successfully set up.\n\n",
-            "You should be able to install packages that compile C, C++, and FORTRAN code."
+            "You should be able to install packages that compile C, C++, and FORTRAN code.\n"
           )
         )
         
@@ -139,7 +139,7 @@ toolchainR <- function()
         paste0(
           "Rtools is not installed. Please install Rtools using the following link:\n\n",
           Rtools_URL, "\n\n",
-          "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up"
+          "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up\n"
         )
       )
       
@@ -175,7 +175,7 @@ toolchainR <- function()
   
     # Message user
     message(
-      "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up"
+      "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up\n"
     )
     
     # Return success

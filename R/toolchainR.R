@@ -2,31 +2,31 @@
 #'
 #' @description A single function to install R toolchains based on your
 #' R version and operating system. Follow the instructions
-#' 
+#'
 #' @return Returns messages and a numeric value:
 #'
 #' \item{0}{Successful toolchain installation}
-#' 
+#'
 #' \item{1}{Failed toolchain installation}
-#' 
+#'
 #' @author Alexander P. Christensen <alexpaulchristensen@gmail.com>
 #'
 #' @examples
 #' if(interactive()){
 #'   toolchainR()}
-#' 
+#'
 #' @export
 #'
-# Updated 28.11.2023
+# Updated 13.01.2024
 # Main function ----
 toolchainR <- function()
 {
   # Get system information
   system_information <- system_check()
-  
+
   # Send message about version < 4.0
   if(as.numeric(substr(system_information$R, 1, 1)) < 4){
-    
+
     # Message user
     message(
       paste0(
@@ -34,24 +34,24 @@ toolchainR <- function()
         "is out-of-date. Version >=4.0 is required."
       )
     )
-    
+
     # Check for update
     if(get_response("Would you like to update R? (Y/n): ") == "y"){
-      
+
       # Send message
       message("Running: installr::updateR()")
-      
+
       # Update R
       installr::updateR()
-      
+
       # Send message
       message("Restart R/RStudio and run this function again")
-      
+
       # Return success flag
       return(0)
-      
+
     }else{
-      
+
       # Send message
       message(
         paste0(
@@ -62,22 +62,22 @@ toolchainR <- function()
           "User termination"
         )
       )
-      
+
       # Return failure flag
       return(1)
-      
+
     }
-    
+
   }
-  
+
   # Set divergent paths
   if(system_information$OS == "windows"){ # Windows
-    
+
     # Check for Rtools already installed
     if(pkgbuild::has_rtools()){
-     
+
       if(pkgbuild::check_rtools()){
-        
+
         # Send completion message
         message(
           paste0(
@@ -86,18 +86,18 @@ toolchainR <- function()
             "You should be able to install packages that compile C, C++, and FORTRAN code.\n"
           )
         )
-        
+
         # Return success flag
         return(0)
-        
+
       }else{
-        
+
         # Send message
         message("Rtools appears to be installed but not properly set up. Setting up Rtools...")
-        
+
         # Set up Rtools
         pkgbuild::setup_rtools()
-        
+
         # Send completion message
         message(
           paste0(
@@ -106,15 +106,15 @@ toolchainR <- function()
             "You should be able to install packages that compile C, C++, and FORTRAN code.\n"
           )
         )
-        
+
         # Return success flag
         return(0)
-      
+
       }
-      
-       
+
+
     }else{ # Install Rtools
-      
+
       # Get Rtools URL
       Rtools_URL <- switch(
         substr(system_information$R, 1, 3),
@@ -133,7 +133,7 @@ toolchainR <- function()
           )
         ), call. = FALSE)
       )
-      
+
       # Message user
       message(
         paste0(
@@ -142,45 +142,43 @@ toolchainR <- function()
           "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up\n"
         )
       )
-      
+
       # Return success flag
       return(0)
-      
+
     }
-    
-    
+
+
   }else if(system_information$OS == "linux"){ # Linux
     message("Linux OS is not yet supported.")
     return("toolchainR installer terminated.")
   }else{ # Mac
-    
-    
-    
+
     # Check for {macrtools}
-    if("macrtools" %in% ulapply(.libPaths(), list.files)){
-      
+    if(!"macrtools" %in% ulapply(.libPaths(), list.files)){
+
       # Send message
       message("Running: remotes::install_github(\"coatless-mac/macrtools\")")
-     
+
       # Actually run
       remotes::install_github("coatless-mac/macrtools")
-      
+
     }
-    
+
     # Send message
     message("Running: macrtools::macos_rtools_install()")
-    
+
     # Actually run
     macrtools::macos_rtools_install()
-  
+
     # Message user
     message(
       "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up\n"
     )
-    
+
     # Return success
     return(0)
-    
+
   }
-  
+
 }

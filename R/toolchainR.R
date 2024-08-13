@@ -17,7 +17,7 @@
 #'
 #' @export
 #'
-# Updated 13.01.2024
+# Updated 13.08.2024
 # Main function ----
 toolchainR <- function()
 {
@@ -87,7 +87,7 @@ toolchainR <- function()
           )
         )
 
-        # Return success flag
+        # Return success
         return(0)
 
       }else{
@@ -107,17 +107,17 @@ toolchainR <- function()
           )
         )
 
-        # Return success flag
+        # Return success
         return(0)
 
       }
-
 
     }else{ # Install Rtools
 
       # Get Rtools URL
       Rtools_URL <- switch(
         substr(system_information$R, 1, 3),
+        "4.4" = "https://cran.r-project.org/bin/windows/Rtools/rtools44/files/rtools44-6104-6039.exe",
         "4.3" = "https://cran.r-project.org/bin/windows/Rtools/rtools43/files/rtools43-5863-5818.exe",
         "4.2" = "https://cran.r-project.org/bin/windows/Rtools/rtools42/files/rtools42-5355-5357.exe",
         "4.1" = "https://github.com/r-windows/rtools-installer/releases/download/2022-02-06/rtools40-x86_64.exe",
@@ -143,41 +143,69 @@ toolchainR <- function()
         )
       )
 
-      # Return success flag
-      return(0)
+      # Return failure
+      return(1)
 
     }
 
 
   }else if(system_information$OS == "linux"){ # Linux
-    message("Linux OS is not yet supported.")
+    message("Linux OS is not yet supported -- message Dr. Christensen <alexander.christensen@vanderbilt.edu>.")
     return("toolchainR installer terminated.")
   }else{ # Mac
 
-    # Check for {macrtools}
-    if(!"macrtools" %in% ulapply(.libPaths(), list.files)){
-
-      # Send message
-      message("Running: remotes::install_github(\"coatless-mac/macrtools\")")
-
-      # Actually run
-      remotes::install_github("coatless-mac/macrtools")
-
-    }
-
-    # Send message
-    message("Running: macrtools::macos_rtools_install()")
-
-    # Actually run
-    macrtools::macos_rtools_install()
-
-    # Message user
-    message(
-      "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up\n"
+    # Check for {gfortran}
+    output <- suppressWarnings(
+      system(
+        "gfortran", intern = TRUE,
+        ignore.stdout = TRUE,
+        ignore.stderr = TRUE
+      )
     )
 
-    # Return success
-    return(0)
+    # If no {gfortran}, then continue
+    if(as.logical(attr(output, "status"))){
+
+      # Send completion message
+      message(
+        paste0(
+          colortext(textsymbol("check mark"), defaults = "green"),
+          " Toolchain is successfully set up.\n\n",
+          "You should be able to install packages that compile C, C++, and FORTRAN code.\n"
+        )
+      )
+
+      # Return success
+      return(0)
+
+    }else{
+
+      # Check for {macrtools}
+      if(!"macrtools" %in% ulapply(.libPaths(), list.files)){
+
+        # Send message
+        message("Running: remotes::install_github(\"coatless-mac/macrtools\")")
+
+        # Actually run
+        remotes::install_github("coatless-mac/macrtools")
+
+      }
+
+      # Send message
+      message("Running: macrtools::macos_rtools_install()")
+
+      # Actually run
+      macrtools::macos_rtools_install()
+
+      # Message user
+      message(
+        "After install, restart R/RStudio and run `toolchainR::toolchainR()` again to verify proper set up\n"
+      )
+
+      # Return failure
+      return(1)
+
+    }
 
   }
 

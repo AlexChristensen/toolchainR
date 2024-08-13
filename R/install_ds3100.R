@@ -25,7 +25,13 @@ install_ds3100 <- function()
   # First, check for toolchain
   toolchain_check <- toolchainR()
 
-  # Second, set list of packages needed to be installed
+  # Second, check for LaTeX
+  latex_check <- install_tinytex()
+
+  # Print new line
+  cat("\n")
+
+  # Third, set list of packages needed to be installed
   ds3100_packages <- c(
     "aricode", "bestNormalize", "car", "caret", "cluster",
     "devtools", "ds4psy", "EGAnet", "factoextra", "faraway",

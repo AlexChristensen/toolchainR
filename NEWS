@@ -1,5 +1,12 @@
 {toolchainR}
 
-Changes in version 0.0.1
+## Changes in version 0.0.2
 
-o Initial commit
++ ADD: `install_tinytex` to install LaTeX if not available
+
++ UPDATE: Mac workflow for `toolchainR`
+
+
+## Changes in version 0.0.1
+
++ Initial commit

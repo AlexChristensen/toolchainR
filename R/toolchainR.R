@@ -150,7 +150,7 @@ toolchainR <- function()
 
 
   }else if(system_information$OS == "linux"){ # Linux
-    message("Linux OS is not yet supported -- message Dr. Christensen <alexander.christensen@vanderbilt.edu>.")
+    message("Linux OS is not yet supported -- email Professor Christensen <alexander.christensen@vanderbilt.edu>.")
     return("toolchainR installer terminated.")
   }else{ # Mac
 

@@ -157,7 +157,7 @@ toolchainR <- function()
     # Check for {gfortran}
     output <- suppressWarnings(
       system(
-        "gfortran", intern = TRUE,
+        "gfortran", intern = FALSE,
         ignore.stdout = TRUE,
         ignore.stderr = TRUE
       )

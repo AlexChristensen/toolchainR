@@ -155,16 +155,16 @@ toolchainR <- function()
   }else{ # Mac
 
     # Check for {gfortran}
-    output <- suppressWarnings(
+    output <- try(
       system(
-        "gfortran", intern = FALSE,
+        "gfortran", intern = TRUE,
         ignore.stdout = TRUE,
         ignore.stderr = TRUE
-      )
+      ), silent = TRUE
     )
 
     # If no {gfortran}, then continue
-    if(as.logical(attr(output, "status"))){
+    if(!is(output, "try-error")){
 
       # Send completion message
       message(

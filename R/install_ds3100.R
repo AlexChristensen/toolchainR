@@ -69,14 +69,6 @@ install_ds3100 <- function()
 
   }
 
-  # # Third, get GitHub packages
-  # remotes::install_github(
-  #   "AlexChristensen/simpleRgenius", quiet = TRUE
-  # )
-  #
-  # # Check again for packages in installed packages
-  # ds3100_packages <- c(ds3100_packages, "simpleRgenius")
-
   # Get packages
   needed_packages <- ds3100_packages[
     !ds3100_packages %in% ulapply(.libPaths(), list.files)
